@@ -1,0 +1,137 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > MessageController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.coms309.Cynance.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: MessageController (com.coms309.Cynance.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MessageController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (1/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    12.5%
+  </span>
+  <span class="absValue">
+    (1/8)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.coms309.Cynance.controller;
+&nbsp;
+&nbsp;import com.coms309.Cynance.model.Message;
+&nbsp;import com.coms309.Cynance.model.MessageDTO;
+&nbsp;import com.coms309.Cynance.repository.MessageRepository;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.stream.Collectors;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;/chat&quot;)
+&nbsp;@CrossOrigin
+<b class="fc">&nbsp;public class MessageController {</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private MessageRepository messageRepository;
+&nbsp;
+&nbsp;    @GetMapping(&quot;/{groupId}/messages&quot;)
+&nbsp;    public ResponseEntity&lt;List&lt;MessageDTO&gt;&gt; getChatMessages(@PathVariable Long groupId) {
+<b class="nc">&nbsp;        List&lt;Message&gt; messages = messageRepository.findByGroupIdOrderByTimestampAsc(groupId);</b>
+&nbsp;
+<b class="nc">&nbsp;        List&lt;MessageDTO&gt; messageDTOs = messages.stream().map(message -&gt; new MessageDTO(</b>
+<b class="nc">&nbsp;                message.getSender(),</b>
+<b class="nc">&nbsp;                message.getContent(),</b>
+<b class="nc">&nbsp;                message.getTimestamp()</b>
+<b class="nc">&nbsp;        )).collect(Collectors.toList());</b>
+&nbsp;
+<b class="nc">&nbsp;        return ResponseEntity.ok(messageDTOs);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-20 19:37</div>
+</div>
+</body>
+</html>

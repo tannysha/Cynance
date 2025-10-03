@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient">
+
+
+<!--    <EditText-->
+<!--        android:id="@+id/usernameEditText"-->
+<!--        android:hint="Enter Username"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"/>-->
+
+    <EditText
+        android:id="@+id/promptEditText"
+        android:hint="Enter your question"
+        android:textColorHint="#FFFFFF"
+        android:backgroundTint="#FFFFFF"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/sendButton"
+        android:text="Ask"
+        android:layout_width="match_parent"
+        android:backgroundTint="#074887"
+        android:layout_height="wrap_content"/>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/responseTextView"
+        android:text="Response will appear here"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:layout_height="wrap_content"/>
+
+</ScrollView>
+</LinearLayout>

@@ -1,0 +1,243 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > User</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.coms309.Cynance.model</a>
+</div>
+
+<h1>Coverage Summary for Class: User (com.coms309.Cynance.model)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">User</td>
+<td class="coverageStat">
+  <span class="percent">
+    47.1%
+  </span>
+  <span class="absValue">
+    (8/17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    39.1%
+  </span>
+  <span class="absValue">
+    (9/23)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">User$HibernateInstantiator$cUJJ7TzL</td>
+  </tr>
+  <tr>
+    <td class="name">User$HibernateProxy$zHOfj1uZ</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    47.1%
+  </span>
+  <span class="absValue">
+    (8/17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    39.1%
+  </span>
+  <span class="absValue">
+    (9/23)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.coms309.Cynance.model;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.annotation.JsonIgnore;
+&nbsp;import jakarta.persistence.*;
+&nbsp;import jakarta.validation.constraints.Email;
+&nbsp;import jakarta.validation.constraints.NotBlank;
+&nbsp;
+&nbsp;import java.util.HashSet;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Set;
+&nbsp;
+&nbsp;@Entity
+&nbsp;@Table(name = &quot;users&quot;)
+&nbsp;public class User {
+&nbsp;    @Id
+&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+&nbsp;    private Long id;
+&nbsp;
+&nbsp;    @NotBlank(message = &quot;Username is mandatory&quot;)
+&nbsp;    @Column(name = &quot;username&quot;, nullable = false, unique = true)
+&nbsp;    private String username;
+&nbsp;
+&nbsp;    @NotBlank(message = &quot;Password is mandatory&quot;)
+&nbsp;    @Column(name = &quot;password&quot;, nullable = false)
+&nbsp;    private String password;
+&nbsp;
+&nbsp;    //i am removing this not blank for email
+&nbsp;    @Email(message = &quot;Invalid email format&quot;)
+&nbsp;    @Column(name = &quot;email&quot;, nullable = true, unique = true)
+&nbsp;    private String email;
+&nbsp;
+&nbsp;    @OneToMany(mappedBy = &quot;user&quot;, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+&nbsp;    public List&lt;Subscription&gt; subscriptionList;
+&nbsp;
+&nbsp;    @OneToMany(mappedBy = &quot;user&quot;, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+&nbsp;    private List&lt;Income&gt; incomes;
+<b class="fc">&nbsp;    @JsonIgnore</b>
+&nbsp;    @ManyToMany(mappedBy = &quot;users&quot;)
+&nbsp;    private Set&lt;GroupChat&gt; groups = new HashSet&lt;&gt;();
+&nbsp;
+&nbsp;    @ManyToOne
+&nbsp;    @JoinColumn(name = &quot;group_id&quot;)
+&nbsp;    private Group group;
+&nbsp;
+&nbsp;    @Column(name=&quot;is_banned&quot;)
+&nbsp;    boolean isBanned;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    @OneToMany(mappedBy = &quot;user&quot;, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+&nbsp;    private List&lt;Income&gt; expenses;
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    public User() {}</b>
+&nbsp;
+<b class="nc">&nbsp;    public User(Long id, String username, String password, String email) {</b>
+<b class="nc">&nbsp;        this.id = id;</b>
+<b class="nc">&nbsp;        this.username = username;</b>
+<b class="nc">&nbsp;        this.password = password;</b>
+<b class="nc">&nbsp;        this.email = email;</b>
+<b class="nc">&nbsp;        this.isBanned = false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Getters and Setters
+&nbsp;
+&nbsp;    public Long getId() {
+<b class="nc">&nbsp;        return id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setId(Long id) {
+<b class="nc">&nbsp;        this.id = id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getUsername() {
+<b class="fc">&nbsp;        return username;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setUsername(String username) {
+<b class="fc">&nbsp;        this.username = username;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getPassword() {
+<b class="fc">&nbsp;        return password;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setPassword(String password) {
+<b class="fc">&nbsp;        this.password = password;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getEmail() {
+<b class="fc">&nbsp;        return email;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setEmail(String email) {
+<b class="fc">&nbsp;        this.email = email;</b>
+&nbsp;    }
+&nbsp;    public Set&lt;GroupChat&gt; getGroups() {
+<b class="nc">&nbsp;        return groups;</b>
+&nbsp;    }
+&nbsp;    public void setGroups(Set&lt;GroupChat&gt; groups) {
+<b class="nc">&nbsp;        this.groups = groups;</b>
+&nbsp;    }
+&nbsp;    public Group getGroup() {
+<b class="nc">&nbsp;        return group;</b>
+&nbsp;    }
+&nbsp;    public void setGroup(Group group) {
+<b class="nc">&nbsp;        this.group = group;</b>
+&nbsp;    }
+&nbsp;    public boolean isBanned() {
+<b class="fc">&nbsp;        return isBanned;</b>
+&nbsp;    }
+&nbsp;    public void setBanned(boolean banned) {
+<b class="nc">&nbsp;        isBanned = banned;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    // Optional toString method
+&nbsp;    @Override
+&nbsp;    public String toString() {
+<b class="nc">&nbsp;        return &quot;User{&quot; +</b>
+&nbsp;                &quot;id=&quot; + id +
+&nbsp;                &quot;, username=&#39;&quot; + username + &#39;\&#39;&#39; +
+&nbsp;                &quot;, email=&#39;&quot; + email + &#39;\&#39;&#39; +
+&nbsp;                &#39;}&#39;;
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-20 19:37</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">AndroidExample</string>
+
+    <string name="welcome">Welcome,</string>
+    <string name="username_placeholder">Shubam</string>
+    <string name="profile_button">Profile Button</string>
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
+    <string name="subscriptions">Subscriptions</string>
+    <string name="analytics">Analytics</string>
+    <string name="cyshare">CyShare</string>|
+    <string name="chat_with_admin">CyShare</string>
+</resources>

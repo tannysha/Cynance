@@ -1,0 +1,83 @@
+stages:
+  - build
+  - test
+  - deploy
+  - androidbuild
+  - androidtest
+
+maven-build:            
+  stage: build
+  tags:
+    - backend_tag
+  script:
+    - cd Backend/Cynance
+    - mvn package
+  artifacts:
+    paths:
+      - Backend/Cynance/target/*.jar
+  only:
+    refs:
+      - main
+    changes:
+      - Backend/**/*
+
+maven-test:             
+  stage: test
+  tags:
+    - backend_tag
+  script:
+    - cd Backend/Cynance
+    - mvn test
+  only:
+    refs:
+      - main
+    changes:
+      - Backend/**/*
+
+auto-deploy:
+  stage: deploy
+  tags:
+    - backend_tag
+  script:
+    - cd Backend/Cynance
+    - sudo mv target/*.jar /target/web-demo.jar 
+    - sudo systemctl stop system-web-demo
+    - sudo systemctl start system-web-demo
+  only:
+    refs:
+      - main
+    changes:
+      - Backend/**/*
+
+android-build:
+  image: afirefly/android-ci:java17
+  stage: androidbuild
+  tags:
+    - android_tag
+  before_script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+    - chmod +x ./Frontend/AndroidExample/gradlew
+  script:
+    - cd Frontend/AndroidExample
+    - ./gradlew assembleRelease -x test -x lint
+  only:
+    refs:
+      - main
+    changes:
+      - Frontend/AndroidExample/**/*
+
+android-test:
+  image: afirefly/android-ci:java17
+  stage: androidtest
+  tags:
+    - android_tag
+  before_script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+    - chmod +x ./Frontend/AndroidExample/gradlew
+  script:
+    - echo "Skipping unit tests temporarily"
+  only:
+    refs:
+      - main
+    changes:
+      - Frontend/AndroidExample/**/*

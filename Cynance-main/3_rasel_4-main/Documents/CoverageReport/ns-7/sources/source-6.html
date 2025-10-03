@@ -1,0 +1,147 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ExpenseShareService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.coms309.Cynance.service</a>
+</div>
+
+<h1>Coverage Summary for Class: ExpenseShareService (com.coms309.Cynance.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ExpenseShareService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    25%
+  </span>
+  <span class="absValue">
+    (1/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    12.5%
+  </span>
+  <span class="absValue">
+    (1/8)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.coms309.Cynance.service;
+&nbsp;
+&nbsp;import com.coms309.Cynance.model.ExpenseShare;
+&nbsp;import com.coms309.Cynance.repository.ExpenseShareRepository;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;@Service
+<b class="fc">&nbsp;public class ExpenseShareService {</b>
+&nbsp;    @Autowired
+&nbsp;    private ExpenseShareRepository expenseShareRepository;
+&nbsp;
+&nbsp;    public ExpenseShare addExpense(ExpenseShare expenseShare) {
+<b class="nc">&nbsp;        return expenseShareRepository.save(expenseShare);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;ExpenseShare&gt; getExpensesByGroup(String groupName) {
+<b class="nc">&nbsp;        return expenseShareRepository.findByGroupName(groupName);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean settleExpense(Long expenseId) {
+<b class="nc">&nbsp;        Optional&lt;ExpenseShare&gt; expense = expenseShareRepository.findById(expenseId);</b>
+<b class="nc">&nbsp;        if (expense.isPresent()) {</b>
+<b class="nc">&nbsp;            expenseShareRepository.delete(expense.get());</b>
+<b class="nc">&nbsp;            return true;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-20 19:37</div>
+</div>
+</body>
+</html>

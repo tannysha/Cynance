@@ -1,0 +1,198 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > SubscriptionService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.coms309.Cynance.service</a>
+</div>
+
+<h1>Coverage Summary for Class: SubscriptionService (com.coms309.Cynance.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SubscriptionService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    16.7%
+  </span>
+  <span class="absValue">
+    (1/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    3.3%
+  </span>
+  <span class="absValue">
+    (1/30)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.coms309.Cynance.service;
+&nbsp;import com.coms309.Cynance.model.Subscription;
+&nbsp;import com.coms309.Cynance.model.User;
+&nbsp;import com.coms309.Cynance.repository.SubscriptionRepository;
+&nbsp;import com.coms309.Cynance.repository.UserRepository;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;@Service
+<b class="fc">&nbsp;public class SubscriptionService {</b>
+&nbsp;    @Autowired
+&nbsp;    private SubscriptionRepository subscriptionRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private UserRepository userRepository;
+&nbsp;
+&nbsp;    //  Add a new subscription for a user
+&nbsp;    public boolean addSubscription(String username, Subscription subscription) {
+<b class="nc">&nbsp;        User user = userRepository.findByUsername(username).orElse(null);</b>
+<b class="nc">&nbsp;        if (user == null) return false;</b>
+&nbsp;
+<b class="nc">&nbsp;        if (subscriptionRepository.findByUserAndTitle(user, subscription.getTitle()).isPresent()) {</b>
+<b class="nc">&nbsp;            return false; // Subscription already exists</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        subscription.setUser(user);</b>
+<b class="nc">&nbsp;        subscriptionRepository.save(subscription);</b>
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Remove a subscription
+&nbsp;    public boolean removeSubscription(String username, String title) {
+<b class="nc">&nbsp;        User user = userRepository.findByUsername(username).orElse(null);</b>
+<b class="nc">&nbsp;        if (user == null) return false;</b>
+&nbsp;
+<b class="nc">&nbsp;        Optional&lt;Subscription&gt; subscription = subscriptionRepository.findByUserAndTitle(user, title);</b>
+<b class="nc">&nbsp;        if (subscription.isEmpty()) return false;</b>
+&nbsp;
+<b class="nc">&nbsp;        subscriptionRepository.delete(subscription.get());</b>
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Get all subscriptions for a user
+&nbsp;    public List&lt;Subscription&gt; getSubscriptions(String username) {
+<b class="nc">&nbsp;        User user = userRepository.findByUsername(username).orElse(null);</b>
+<b class="nc">&nbsp;        if (user == null) return List.of(); // Return an empty list instead of null</b>
+<b class="nc">&nbsp;        return subscriptionRepository.findByUser(user);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Get a single subscription
+&nbsp;    public Optional&lt;Subscription&gt; getSubscription(String username, String title) {
+<b class="nc">&nbsp;        User user = userRepository.findByUsername(username).orElse(null);</b>
+<b class="nc">&nbsp;        if (user == null) return Optional.empty();</b>
+<b class="nc">&nbsp;        return subscriptionRepository.findByUserAndTitle(user, title);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //  Update subscription details
+&nbsp;    public boolean updateSubscription(String username, Subscription updatedSubscription) {
+&nbsp;        // Find the user by username
+<b class="nc">&nbsp;        User user = userRepository.findByUsername(username).orElse(null);</b>
+<b class="nc">&nbsp;        if (user == null) return false; // User does not exist</b>
+&nbsp;
+&nbsp;        // Find the existing subscription by user and title (using the old title)
+<b class="nc">&nbsp;        Optional&lt;Subscription&gt; existingSubscription = subscriptionRepository.findByUserAndTitle(user, updatedSubscription.getTitle());</b>
+<b class="nc">&nbsp;        if (existingSubscription.isEmpty()) return false; // Subscription not found</b>
+&nbsp;
+<b class="nc">&nbsp;        Subscription subscription = existingSubscription.get();</b>
+&nbsp;
+&nbsp;        // Update only necessary fields
+<b class="nc">&nbsp;        subscription.setPrice(updatedSubscription.getPrice());</b>
+<b class="nc">&nbsp;        subscription.setStartDate(updatedSubscription.getStartDate());</b>
+<b class="nc">&nbsp;        subscription.setEndDate(updatedSubscription.getEndDate());</b>
+&nbsp;
+&nbsp;        // Save updated subscription
+<b class="nc">&nbsp;        subscriptionRepository.save(subscription);</b>
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-20 19:37</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_gradient">
+
+    <!-- 🔵 Blue Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/main_msg_txt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Hello, "
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/main_username_txt_msg_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/username_placeholder"
+            android:textColor="#225c94"
+            android:textSize="18sp"
+            android:layout_marginTop="2dp" />
+
+
+        <ImageButton
+            android:id="@+id/search_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_search2"
+            android:background="@drawable/rounded_button"
+
+            android:contentDescription="Search" />
+
+        <ImageButton
+            android:id="@+id/notification_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_notifications"
+            android:background="@drawable/rounded_button"
+            android:contentDescription="Notifications" />
+
+        <ImageButton
+            android:id="@+id/main_profile_tracker_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_settings"
+            android:background="@drawable/rounded_button"
+            android:contentDescription="Settings" />
+    </LinearLayout>
+
+    <!-- 📊 Donut Chart Card with ViewPager -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/analytics_card"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="6dp"
+        android:backgroundTint="#FFFFFF">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/miniViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="314dp" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- ➕ Income & Expense Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="16dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/card_income"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Income                                                                             "
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#074887"
+            app:cornerRadius="24dp"
+            app:icon="@android:drawable/ic_media_next"
+            app:iconGravity="textEnd"
+            app:iconPadding="8dp"
+            android:paddingStart="16dp"
+            android:gravity="center_vertical|start"
+            android:layout_marginBottom="8dp" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/card_expense"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Expense                                                                           "
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#074887"
+            app:cornerRadius="24dp"
+            app:icon="@android:drawable/ic_media_next"
+            app:iconGravity="textEnd"
+            app:iconPadding="8dp"
+            android:paddingStart="16dp"
+            android:gravity="center_vertical|start"
+            android:layout_marginBottom="8dp" />
+
+        <!--        <Button-->
+        <!--            android:id="@+id/btn_news"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="48dp"-->
+        <!--            android:text="News"-->
+        <!--            android:drawableEnd="@android:drawable/ic_media_next"-->
+        <!--            android:background="@drawable/rounded_gray_button"-->
+        <!--            android:gravity="center_vertical|start"-->
+        <!--            android:paddingStart="16dp" />-->
+    </LinearLayout>
+
+    <!-- 🟦 Grid of Feature Cards -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:layout_margin="16dp"
+        android:alignmentMode="alignMargins"
+        android:rowOrderPreserved="false">
+
+        <!-- 6 Rounded Square Buttons -->
+        <FrameLayout
+            android:id="@+id/card_subscriptions"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:background="@drawable/blue_rounded_square">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/ic_subscriptions"
+                    android:tint="#FFFFFF"
+                    android:contentDescription="@string/subscriptions" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/subscriptions"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:id="@+id/card_news"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:background="@drawable/blue_rounded_square">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/ic_news"
+                    android:tint="#FFFFFF"
+                    android:contentDescription="@string/analytics" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="News"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/card_chat_admin"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:background="@drawable/blue_rounded_square">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/ic_chat"
+                    android:tint="#FFFFFF"
+                    android:contentDescription="@string/chat_with_admin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Admin Chat"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/card_cyshare"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:background="@drawable/blue_rounded_square" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/ic_cyshare"
+                    android:tint="#FFFFFF"
+                    android:contentDescription="@string/chat_with_admin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cyshare"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/btn_stock_chart"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:background="@drawable/blue_rounded_square" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/ic_stockchart"
+                    android:tint="#FFFFFF"
+                    android:contentDescription="@string/chat_with_admin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stock Chart"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/btn_chatgpt"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:background="@drawable/blue_rounded_square" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/chat2"
+                    android:tint="#FFFFFF"
+                    android:contentDescription="@string/chat_with_admin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ChatGPT"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+        </FrameLayout>
+    </GridLayout>
+
+</LinearLayout>

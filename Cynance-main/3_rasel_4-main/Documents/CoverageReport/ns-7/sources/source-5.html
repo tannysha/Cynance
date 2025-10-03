@@ -1,0 +1,263 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ExpenseService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.coms309.Cynance.service</a>
+</div>
+
+<h1>Coverage Summary for Class: ExpenseService (com.coms309.Cynance.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ExpenseService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    12.5%
+  </span>
+  <span class="absValue">
+    (1/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/30)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    1.6%
+  </span>
+  <span class="absValue">
+    (1/64)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.coms309.Cynance.service;
+&nbsp;
+&nbsp;import com.coms309.Cynance.model.*;
+&nbsp;import com.coms309.Cynance.repository.ExpensesRepository;
+&nbsp;import com.coms309.Cynance.repository.UserRepository;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.util.*;
+&nbsp;
+&nbsp;@Service
+<b class="fc">&nbsp;public class ExpenseService {</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private ExpensesRepository expensesRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private UserRepository userRepository;
+&nbsp;
+&nbsp;
+&nbsp;    public boolean addExpense(String username, Expenses expense) {
+<b class="nc">&nbsp;        User user = userRepository.findByUsername(username).orElse(null);</b>
+<b class="nc">&nbsp;        if (user == null) return false;</b>
+&nbsp;
+<b class="nc">&nbsp;        expense.setUser(user);</b>
+<b class="nc">&nbsp;        expensesRepository.save(expense);</b>
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean removeExpense(String username, String title) {
+<b class="nc">&nbsp;        User user = userRepository.findByUsername(username).orElse(null);</b>
+<b class="nc">&nbsp;        if (user == null) return false;</b>
+&nbsp;
+<b class="nc">&nbsp;        Optional&lt;Expenses&gt; expense = expensesRepository.findByUserAndTitle(user, title);</b>
+<b class="nc">&nbsp;        if (expense.isEmpty()) return false;</b>
+&nbsp;
+<b class="nc">&nbsp;        expensesRepository.delete(expense.get());</b>
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public List&lt;Expenses&gt; getExpenses(String username) {
+<b class="nc">&nbsp;        User user = userRepository.findByUsername(username).orElse(null);</b>
+<b class="nc">&nbsp;        if (user == null) return List.of(); // Return an empty list instead of null</b>
+<b class="nc">&nbsp;        return expensesRepository.findByUser(user);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public Optional&lt;Expenses&gt; getExpense(String username, String title) {
+<b class="nc">&nbsp;        User user = userRepository.findByUsername(username).orElse(null);</b>
+<b class="nc">&nbsp;        if (user == null) return Optional.empty();</b>
+<b class="nc">&nbsp;        return expensesRepository.findByUserAndTitle(user, title);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public boolean updateExpense(String username, String title, Expenses updatedExpense) {
+<b class="nc">&nbsp;        User user = userRepository.findByUsername(username).orElse(null);</b>
+<b class="nc">&nbsp;        if (user == null) return false;</b>
+&nbsp;
+<b class="nc">&nbsp;        Optional&lt;Expenses&gt; existingExpense = expensesRepository.findByUserAndTitle(user, title);</b>
+<b class="nc">&nbsp;        if (existingExpense.isEmpty()) return false; // Expense not found</b>
+&nbsp;
+<b class="nc">&nbsp;        Expenses expense = existingExpense.get();</b>
+<b class="nc">&nbsp;        expense.setDate(updatedExpense.getDate());</b>
+<b class="nc">&nbsp;        expense.setDescription(updatedExpense.getDescription());</b>
+<b class="nc">&nbsp;        expense.setPrice(updatedExpense.getPrice());</b>
+&nbsp;
+<b class="nc">&nbsp;        expensesRepository.save(expense);</b>
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;    public List&lt;CategorySpendingDTO&gt; getSpendingByCategory(String username) {
+<b class="nc">&nbsp;        List&lt;Expenses&gt; expenses = getExpenses(username);</b>
+&nbsp;
+<b class="nc">&nbsp;        Map&lt;String, Double&gt; categoryTotals = new HashMap&lt;&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;        for (Expenses e : expenses) {</b>
+<b class="nc">&nbsp;            String category = e.getTitle();</b>
+<b class="nc">&nbsp;            double amount = 0.0;</b>
+&nbsp;            try {
+<b class="nc">&nbsp;                amount = Double.parseDouble(e.getPrice());</b>
+&nbsp;            } catch (NumberFormatException ex) {
+&nbsp;                continue;
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            categoryTotals.put(category, categoryTotals.getOrDefault(category, 0.0) + amount);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        List&lt;CategorySpendingDTO&gt; result = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (Map.Entry&lt;String, Double&gt; entry : categoryTotals.entrySet()) {</b>
+<b class="nc">&nbsp;            result.add(new CategorySpendingDTO(entry.getKey(), entry.getValue()));</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return result;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public MaxCategoryBillDTO getMaxCategoryAndTopExpense(String username) {
+<b class="nc">&nbsp;        List&lt;Expenses&gt; expenses = getExpenses(username);</b>
+<b class="nc">&nbsp;        if (expenses.isEmpty()) {</b>
+<b class="nc">&nbsp;            return new MaxCategoryBillDTO(&quot;N/A&quot;, 0.0, null);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        Map&lt;String, Double&gt; categoryTotals = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;        Map&lt;String, Expenses&gt; maxBillPerCategory = new HashMap&lt;&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;        for (Expenses e : expenses) {</b>
+<b class="nc">&nbsp;            String category = e.getTitle();</b>
+&nbsp;            double amount;
+&nbsp;            try {
+<b class="nc">&nbsp;                amount = Double.parseDouble(e.getPrice());</b>
+&nbsp;            } catch (NumberFormatException ex) {
+&nbsp;                continue;
+&nbsp;            }
+&nbsp;
+&nbsp;            // Sum category totals
+<b class="nc">&nbsp;            categoryTotals.put(category, categoryTotals.getOrDefault(category, 0.0) + amount);</b>
+&nbsp;
+&nbsp;            // Track max bill per category
+<b class="nc">&nbsp;            if (!maxBillPerCategory.containsKey(category) ||</b>
+<b class="nc">&nbsp;                    Double.parseDouble(maxBillPerCategory.get(category).getPrice()) &lt; amount) {</b>
+<b class="nc">&nbsp;                maxBillPerCategory.put(category, e);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;        // Find the max category overall
+<b class="nc">&nbsp;        String maxCategory = null;</b>
+<b class="nc">&nbsp;        double maxTotal = 0.0;</b>
+&nbsp;
+<b class="nc">&nbsp;        for (Map.Entry&lt;String, Double&gt; entry : categoryTotals.entrySet()) {</b>
+<b class="nc">&nbsp;            if (entry.getValue() &gt; maxTotal) {</b>
+<b class="nc">&nbsp;                maxCategory = entry.getKey();</b>
+<b class="nc">&nbsp;                maxTotal = entry.getValue();</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        Expenses topExpense = maxBillPerCategory.get(maxCategory);</b>
+<b class="nc">&nbsp;        ExpenseSummary summary = new ExpenseSummary(</b>
+<b class="nc">&nbsp;                topExpense.getTitle(),</b>
+<b class="nc">&nbsp;                topExpense.getDate(),</b>
+<b class="nc">&nbsp;                topExpense.getDescription(),</b>
+<b class="nc">&nbsp;                Double.parseDouble(topExpense.getPrice())</b>
+&nbsp;        );
+&nbsp;
+<b class="nc">&nbsp;        return new MaxCategoryBillDTO(maxCategory, maxTotal, summary);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-20 19:37</div>
+</div>
+</body>
+</html>

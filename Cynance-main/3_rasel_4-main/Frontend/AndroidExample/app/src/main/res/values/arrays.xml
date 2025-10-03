@@ -1,0 +1,15 @@
+<resources>
+    <string-array name="payment_frequency_array">
+        <item>Weekly</item>
+        <item>Bi-Weekly</item>
+        <item>Monthly</item>
+        <item>Annually</item>
+    </string-array>
+    <string-array name="category_array">
+        <item>Food</item>
+        <item>Transport</item>
+        <item>Entertainment</item>
+        <item>Other</item>
+    </string-array>
+
+</resources>

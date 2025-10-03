@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Signup Success</title>
+</head>
+<body>
+<h1>Signup Successful!</h1>
+
+<!-- ✅ Display username -->
+<p>Welcome, <span th:text="${user.username}">User</span>!</p>
+
+<a href="/api/users/register">Go back to Signup</a>
+</body>
+</html>
+
